@@ -95,15 +95,16 @@ Password: password123
 
 ## Project Structure
 
+```text
 academichub/
 │
-├── manage.py             # Django Command Utility
-├── db.sqlite3             # Database File
-├── academichub/        # Project Settings & Config
+├── manage.py               # Django Command Utility
+├── db.sqlite3              # Database File
+├── academichub/            # Project Settings & Config
 │
-└── students/                 # Main Application
+└── students/               # Main Application
     ├── models.py           # Database Tables (Student, Course)
-    ├── views.py           # Logic & Controllers
+    ├── views.py            # Logic & Controllers
     ├── urls.py             # Route definitions
     ├── forms.py            # Registration & Edit Forms
     │
@@ -115,3 +116,4 @@ academichub/
         ├── login.html
         ├── dashboard_admin.html
         └── dashboard_student.html
+```
