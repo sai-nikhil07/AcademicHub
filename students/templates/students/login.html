@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login | AcademicHub</title>
+    <style>
+        /* Minimalist Reset */
+        body {
+            margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; position: relative;
+        }
+
+        /* Top Right Button */
+        .portal-switch {
+            position: absolute; top: 20px; right: 30px;
+            text-decoration: none; color: #555; font-size: 0.9rem; font-weight: 600;
+            padding: 8px 15px; border: 1px solid #ddd; border-radius: 20px;
+            background: white; transition: all 0.3s;
+        }
+        .portal-switch:hover { background: #333; color: white; border-color: #333; }
+
+        /* Login Card */
+        .login-card {
+            background: white; padding: 2.5rem; border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 350px;
+            text-align: center; border-top: 5px solid #007bff; /* Default Blue */
+        }
+        
+        /* Admin specific style */
+        .admin-mode { border-top-color: #dc3545; } /* Red for Admin */
+
+        .login-card h2 { margin-bottom: 1.5rem; color: #333; font-weight: 600; }
+        form p { margin-bottom: 15px; text-align: left; }
+        label { display: block; margin-bottom: 5px; color: #666; font-size: 0.9rem; }
+        input[type="text"], input[type="password"] {
+            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;
+            box-sizing: border-box; font-size: 1rem;
+        }
+        button {
+            width: 100%; padding: 12px; background-color: #007bff; color: white;
+            border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; margin-top: 10px;
+        }
+        button:hover { background-color: #0056b3; }
+        
+        .admin-btn { background-color: #dc3545; }
+        .admin-btn:hover { background-color: #b02a37; }
+
+        .footer-links { margin-top: 15px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    {% if request.GET.role == 'admin' %}
+        <a href="{% url 'login' %}" class="portal-switch">&larr; Student Login</a>
+    {% else %}
+        <a href="{% url 'login' %}?role=admin" class="portal-switch">Admin Portal &rarr;</a>
+    {% endif %}
+
+    <div class="login-card {% if request.GET.role == 'admin' %}admin-mode{% endif %}">
+        
+        {% if request.GET.role == 'admin' %}
+            <h2>Admin Portal</h2>
+        {% else %}
+            <h2>Student Login</h2>
+        {% endif %}
+        
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <p>
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                </p>
+            {% endfor %}
+            
+            {% if request.GET.role == 'admin' %}
+                <button type="submit" class="admin-btn">Login to Dashboard</button>
+            {% else %}
+                <button type="submit">Login</button>
+            {% endif %}
+        </form>
+
+        {% if request.GET.role != 'admin' %}
+        <div class="footer-links">
+            <p>New Student? <a href="{% url 'register' %}">Register Here</a></p>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>

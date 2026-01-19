@@ -1,0 +1,120 @@
+{% extends 'students/base.html' %}
+
+{% block content %}
+<div class="grid">
+    
+    <div>
+        <div class="card">
+            <h3>Register New Student</h3>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="add_student" value="true">
+                
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 0.85rem; color:#666;">First Name</label>
+                    {{ student_form.first_name }}
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 0.85rem; color:#666;">Last Name</label>
+                    {{ student_form.last_name }}
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 0.85rem; color:#666;">Roll Number (Username)</label>
+                    {{ student_form.roll_number }}
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 0.85rem; color:#666;">Email</label>
+                    {{ student_form.email }}
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 0.85rem; color:#666;">Password</label>
+                    {{ student_form.password }}
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 0.85rem; color:#666;">Branch</label>
+                    {{ student_form.branch }}
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 0.85rem; color:#666;">Assign Course</label>
+                    {{ student_form.course }}
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Register Student</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3>Add New Course</h3>
+            {% if courses.count < 4 %}
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="add_course" value="true">
+                    
+                    <label style="font-size: 0.9rem; color:#666;">Course Name</label>
+                    {{ course_form.name }}
+                    
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px; background-color: #28a745;">+ Add Course</button>
+                </form>
+            {% else %}
+                <p style="color: #d9534f; font-size: 0.9rem;">Maximum course limit (4) reached.</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h3>Active Courses</h3>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                {% for course in courses %}
+                    <li style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f9f9f9;">
+                        <span>{{ course.name }}</span>
+                        <a href="{% url 'delete_course' course.id %}" class="btn-danger">×</a>
+                    </li>
+                {% empty %}
+                    <li style="color: #999; font-style: italic;">No courses yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px;">
+                <h3 style="border:none; margin:0; padding:0;">Student Records</h3>
+                <span class="tag">{{ students.count }} Students</span>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Roll No</th>
+                        <th>Name</th>
+                        <th>Branch</th>
+                        <th>Course</th>
+                        <th style="text-align: right;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in students %}
+                    <tr>
+                        <td style="font-family: monospace; color: #555;">{{ s.roll_number }}</td>
+                        <td><strong>{{ s.user.first_name }} {{ s.user.last_name }}</strong></td>
+                        <td>{{ s.branch }}</td>
+                        <td>
+                            {% if s.course %}
+                                <span class="tag">{{ s.course.name }}</span>
+                            {% else %}
+                                <span style="color: #ccc;">-</span>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: right;">
+    <a href="{% url 'edit_student' s.id %}" class="btn" style="background:#ffc107; color:black; padding:4px 8px; margin-right:5px; font-size:0.8rem;">Edit</a>
+    <a href="{% url 'delete_student' s.id %}" class="btn-danger">Delete</a>
+</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

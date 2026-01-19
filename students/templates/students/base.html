@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AcademicHub</title>
+    <style>
+        /* --- 1. Global Reset --- */
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8f9fa; color: #333; }
+        a { text-decoration: none; color: inherit; }
+        
+        /* --- 2. Navigation Bar --- */
+        .navbar { background: white; padding: 0 2rem; height: 60px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .navbar .brand { font-weight: 700; font-size: 1.2rem; color: #2c3e50; }
+        .navbar .user-info { font-size: 0.9rem; color: #666; }
+
+        /* --- 3. Layout --- */
+        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+        .grid { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; } /* Sidebar/Main layout */
+
+        /* --- 4. Cards (The White Boxes) --- */
+        .card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.03); margin-bottom: 20px; border: 1px solid #eee; }
+        .card h3 { margin-top: 0; font-size: 1.1rem; color: #2c3e50; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+
+        /* --- 5. Modern Tables --- */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.95rem; }
+        th { text-align: left; color: #888; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; padding: 12px 8px; border-bottom: 2px solid #f0f0f0; }
+        td { padding: 12px 8px; border-bottom: 1px solid #f8f8f8; color: #444; }
+        tr:hover td { background-color: #fafafa; }
+
+        /* --- 6. Form Elements --- */
+        input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; margin-bottom: 10px; }
+        
+        /* --- 7. Buttons --- */
+        .btn { display: inline-block; padding: 8px 16px; border-radius: 6px; font-size: 0.9rem; border: none; cursor: pointer; transition: 0.2s; }
+        .btn-primary { background: #007bff; color: white; width: 100%; }
+        .btn-primary:hover { background: #0056b3; }
+        .btn-danger { color: #dc3545; background: none; padding: 4px 8px; }
+        .btn-danger:hover { background: #fee; border-radius: 4px; }
+        .btn-logout { background: #eee; color: #333; margin-left: 10px; padding: 6px 12px; }
+
+        /* --- 8. Tags --- */
+        .tag { background: #e3f2fd; color: #0d47a1; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 500; }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="brand">AcademicHub</div>
+        <div class="user-info">
+            {% if user.is_authenticated %}
+                <span>{{ user.first_name }} {{ user.last_name }}</span>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-logout">Logout</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>

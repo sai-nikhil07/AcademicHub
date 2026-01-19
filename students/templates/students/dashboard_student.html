@@ -1,0 +1,11 @@
+{% extends 'students/base.html' %}
+{% block content %}
+<h3>Student Dashboard</h3>
+<div style="padding: 20px; border: 1px solid #ddd;">
+    <p><strong>Name:</strong> {{ student.user.first_name }} {{ student.user.last_name }}</p>
+    <p><strong>Roll Number:</strong> {{ student.roll_number }}</p>
+    <p><strong>Email:</strong> {{ student.user.email }}</p>
+    <p><strong>Branch:</strong> {{ student.branch }}</p>
+    <p><strong>Enrolled Course:</strong> {{ student.course.name|default:"Not assigned" }}</p>
+</div>
+{% endblock %}
