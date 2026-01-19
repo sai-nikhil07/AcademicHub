@@ -7,13 +7,16 @@ AcademicHub is a clean, efficient, and secure Student Management System built wi
 ## Screenshots
 
 ### 1. Login Page (Student & Admin Portal)
-![Login Page Placeholder](Insert_Login_Screenshot_Here.png)
+![Login Page Placeholder](studentlogin.png)
+![Login Page Placeholder](adminlogin.png)
+
+### 2. Student DashBoard
+![student Dashboard ](studentdashboard.png)
 
 ### 2. Admin Dashboard (Manage Students & Courses)
-![Admin Dashboard Placeholder](Insert_Admin_Dashboard_Screenshot_Here.png)
+![Admin Dashboard Placeholder](admindashboard.png)
 
-### 3. Student Edit Form
-![Edit Student Placeholder](Insert_Edit_Student_Screenshot_Here.png)
+
 
 ---
 
